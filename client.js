@@ -13,7 +13,7 @@ window.onload = () => {
     box = document.getElementById('field');
     stdin = document.getElementById('input');
     btn = document.getElementById('btn');
-    manager = io.connect('http://bot.storyboard.ml:7000', {
+    manager = io.connect('https://bot.storyboard.ml', {
         path: '/storybot-web',
         forceNew: true
     });
