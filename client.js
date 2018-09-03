@@ -4,9 +4,8 @@ var btn = null;
 var manager = null;
 
 const initData = {
-    "namespace": "test",
-    "service": "testing mode",
-    "id": -282
+    "client-uuid": "4c3fa3fe-d5cb-41ba-be81-2919f9001d3c",
+    "service": "web testing"
 };
 
 window.onload = () => {
@@ -14,13 +13,19 @@ window.onload = () => {
     stdin = document.getElementById('input');
     btn = document.getElementById('btn');
     manager = io.connect('http://bot.storyboard.ml', {
-        path: '/storybot-web',
+        path: '/storybot-socket',
         forceNew: true
     });
 
     manager.on('connect', () => {
         console.log('connected');
         manager.emit('initialize', initData);
+        manager.on('initialize', (res) => {
+            if (res.status == 0)
+                console.log('initialized with ' + res.namespace);
+            else
+                console.log('error on initializing');
+        });
     });
 
     manager.on('message', (data) => {
